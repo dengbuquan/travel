@@ -1,10 +1,27 @@
 <!-- 头部 start -->
     <script type="text/javascript">
         $(function () {
+            //发送ajax请求，获取用户的姓名
             $.get("user/find",{},function (data) {
                 $("#span_username").html("欢迎您！"+data)
-            })
-        })
+            });
+            //发送ajax请求，获取种类信息，展示到指定区域
+            $.get("category/findAll",{},function (data) {
+                //date的模式：{cid：1，cname：xxx}
+                //处理后端发送回来的种类信息
+                //1、首页li标签
+                var lis = '<li class="nav-active"><a href="index.html">首页</a></li>';
+                for(var i = 0 ; i < data.length ; i++){
+                    //2、拼接后端返回回来的所有的cname标签
+                    var li = '<li><a href="route_list.html">'+data[i].cname+'</a></li>';
+                    lis += li;
+                }
+                //3、拼接收藏排行榜
+                lis += '<li><a href="favoriterank.html">收藏排行榜</a></li>';
+                //4、把lis放入到指定的位置
+                $("#category").html(lis);
+            });
+        });
     </script>
     <header id="header">
         <div class="top_banner">
@@ -47,17 +64,17 @@
     <!-- 头部 end -->
      <!-- 首页导航 -->
     <div class="navitem">
-        <ul class="nav">
-            <li class="nav-active"><a href="index.html">首页</a></li>
-            <li><a href="route_list.html">门票</a></li>
-            <li><a href="route_list.html">酒店</a></li>
-            <li><a href="route_list.html">香港车票</a></li>
-            <li><a href="route_list.html">出境游</a></li>
-            <li><a href="route_list.html">国内游</a></li>
-            <li><a href="route_list.html">港澳游</a></li>
-            <li><a href="route_list.html">抱团定制</a></li>
-            <li><a href="route_list.html">全球自由行</a></li>
-            <li><a href="favoriterank.html">收藏排行榜</a></li>
+        <ul id="category" class="nav">
+            <!--<li class="nav-active"><a href="index.html">首页</a></li>-->
+            <!--<li><a href="route_list.html">门票</a></li>-->
+            <!--<li><a href="route_list.html">酒店</a></li>-->
+            <!--<li><a href="route_list.html">香港车票</a></li>-->
+            <!--<li><a href="route_list.html">出境游</a></li>-->
+            <!--<li><a href="route_list.html">国内游</a></li>-->
+            <!--<li><a href="route_list.html">港澳游</a></li>-->
+            <!--<li><a href="route_list.html">抱团定制</a></li>-->
+            <!--<li><a href="route_list.html">全球自由行</a></li>-->
+            <!--<li><a href="favoriterank.html">收藏排行榜</a></li>-->
         </ul>
     </div>
     

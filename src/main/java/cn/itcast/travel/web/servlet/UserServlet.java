@@ -29,7 +29,7 @@ public class UserServlet extends BaseServlet {
             resultInfo = userService.registUser(user);
         }
         //将resultInfo序列化为json
-        String json = CustomUtils.infoToJson(resultInfo);
+        String json = CustomUtils.toJson(resultInfo);
         //将得到的json返回给前端
         //设置响应内容为application/json
         resp.setContentType("application/json;charset=utf-8");
@@ -80,7 +80,7 @@ public class UserServlet extends BaseServlet {
             }
         }
         //将resultInfo序列化为json
-        String json = CustomUtils.infoToJson(resultInfo);
+        String json = CustomUtils.toJson(resultInfo);
         //将得到的json返回给前端
         //设置响应内容为application/json
         resp.setContentType("application/json;charset=utf-8");
@@ -120,5 +120,4 @@ public class UserServlet extends BaseServlet {
         //第三步：将请求转发到登录页面
         resp.sendRedirect("/travel/login.html");
     }
-
 }

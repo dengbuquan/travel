@@ -56,12 +56,12 @@ public class CustomUtils {
         return null;
     }
 
-    public static String infoToJson(ResultInfo resultInfo){
-        //使用jackson将resultInfo序列化为json
+    public static String toJson(Object obj){
+        //使用jackson将obj序列化为json
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
         try {
-            json = mapper.writeValueAsString(resultInfo);
+            json = mapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
