@@ -122,7 +122,7 @@
 							&&checkName()&&checkTelephone()){
 						//在jQuery中，form对象可以使用serialize()方法将表单中的信息
 						//转化成username=zhangsan&password=123456的形式
-						$.post("regist",$(this).serialize(),function (data) {
+						$.post("user/regist",$(this).serialize(),function (data) {
 							//处理服务器响应的数据{flag:xxx;errorMsg:xxx}
 							if(data.flag == true){
 								//注册成功

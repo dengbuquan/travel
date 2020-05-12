@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
             userDao.save(user);
             //设置邮件的正文内容，将code拼接到链接的后面，用来标识用户的身份
             String content = "恭喜您注册成功！" +
-                    "请点击<a href='http://localhost:8080/travel/active?code="+ code +"'>激活</a>" +
+                    "请点击<a href='http://localhost:8080/travel/user/active?code="+ code +"'>激活</a>" +
                     "您的账户！";
             MailUtils.sendMail(user.getEmail(),content,"激活邮件");
             return resultInfo;

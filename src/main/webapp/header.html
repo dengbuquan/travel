@@ -1,7 +1,7 @@
 <!-- 头部 start -->
     <script type="text/javascript">
         $(function () {
-            $.get("findUser",{},function (data) {
+            $.get("user/find",{},function (data) {
                 $("#span_username").html("欢迎您！"+data)
             })
         })
@@ -15,7 +15,7 @@
             <div class="login_out">
                 <a href="login.html">登录</a>
                 <a href="register.html">注册</a>
-                <a href="/travel/exit">退出</a>
+                <a href="/travel/user/exit">退出</a>
             </div>
             <!-- 登录状态  -->
             <div class="login">
