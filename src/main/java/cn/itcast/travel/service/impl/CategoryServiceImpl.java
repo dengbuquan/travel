@@ -6,6 +6,7 @@ import cn.itcast.travel.domain.Category;
 import cn.itcast.travel.service.CategoryService;
 import cn.itcast.travel.util.JedisUtil;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,11 @@ public class CategoryServiceImpl implements CategoryService {
         //第二步：从redis中获取category的数据
         //此处要注意的是，我们希望页面展示的分类信息的顺序能够和数据库中cid的顺序一致
         //所以使用sortedset类型category数据的保存,所以使用zrange进行数据的获取
-        Set<String> categories = jedis.zrange("category", 0, -1);
+        //Set<String> categories = jedis.zrange("category", 0, -1);
+        //因为前端在展示分类信息的时候需要用到类别的cid，所以我们从redis中取数据的时候要带上分数
+        //Tuple类中有两个属性element和score，分别代表了sortedset中的各个元素和每个元素对应的分数
+        //private byte[] element;private Double score;
+        Set<Tuple> categories = jedis.zrangeWithScores("category", 0, -1);
         //判断得到的categories中是否为空，或者有没有数据
         //创建一个categoryList对象，用来保存最后返回的数据
         List<Category> categoryList = null;
@@ -46,12 +51,13 @@ public class CategoryServiceImpl implements CategoryService {
             //如果不为空，则代表redis中已经有了数据，那么我们就可以直接将categories返回
             //但是因为categories的类型是Set<String>，所以我们需要进行类型的转换
             categoryList = new ArrayList<Category>();
-            for (String category : categories) {
+            for (Tuple tuple : categories) {
                 //因为我们从redis中读取到的数据是字符串类型的set集合，而我们需要返回的是Category的list集合
                 //所以我们需要进行数据的包装
-                Category category1 = new Category();
-                category1.setCname(category);
-                categoryList.add(category1);
+                Category category = new Category();
+                category.setCname(tuple.getElement());
+                category.setCid((int)tuple.getScore());
+                categoryList.add(category);
             }
         }
         return categoryList;
