@@ -12,8 +12,8 @@
                 //1、首页li标签
                 var lis = '<li class="nav-active"><a href="index.html">首页</a></li>';
                 for(var i = 0 ; i < data.length ; i++){
-                    //2、拼接后端返回回来的所有的cname标签
-                    var li = '<li><a href="route_list.html">'+data[i].cname+'</a></li>';
+                    //2、拼接后端返回回来的所有的cname标签,并把每一条数据对应的cid拼接到href中
+                    var li = '<li><a href="route_list.html?cid='+ data[i].cid +'">'+data[i].cname+'</a></li>';
                     lis += li;
                 }
                 //3、拼接收藏排行榜
