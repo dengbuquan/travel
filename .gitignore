@@ -11,3 +11,4 @@
 *.meta
 *.zip
 *.lst
+target/tomcat/logs/access_log.2020-05-13
