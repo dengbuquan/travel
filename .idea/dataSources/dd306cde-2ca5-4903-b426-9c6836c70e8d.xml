@@ -14,7 +14,7 @@
     </schema>
     <schema id="3" parent="1" name="mysql">
       <Visible>1</Visible>
-      <Collation>utf8_general_ci</Collation>
+      <Collation>utf8mb4_0900_ai_ci</Collation>
     </schema>
     <schema id="4" parent="1" name="performance_schema">
       <Visible>1</Visible>
@@ -26,7 +26,7 @@
     </schema>
     <schema id="6" parent="1" name="travel">
       <Visible>1</Visible>
-      <Collation>utf8_general_ci</Collation>
+      <Collation>utf8mb4_0900_ai_ci</Collation>
     </schema>
     <collation id="7" parent="1" name="armscii8_bin">
       <Charset>armscii8</Charset>
@@ -1341,6 +1341,7 @@
     </table>
     <table id="353" parent="3" name="component">
       <Comment>Components</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="354" parent="3" name="db">
       <Comment>Database privileges</Comment>
@@ -1350,7 +1351,9 @@
       <Comment>Default roles</Comment>
       <Collation>utf8_bin</Collation>
     </table>
-    <table id="356" parent="3" name="engine_cost"/>
+    <table id="356" parent="3" name="engine_cost">
+      <Collation>utf8_general_ci</Collation>
+    </table>
     <table id="357" parent="3" name="func">
       <Comment>User defined functions</Comment>
       <Collation>utf8_bin</Collation>
@@ -1358,6 +1361,7 @@
     <table id="358" parent="3" name="general_log">
       <Comment>General log</Comment>
       <Engine>CSV</Engine>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="359" parent="3" name="global_grants">
       <Comment>Extended global grants</Comment>
@@ -1366,15 +1370,19 @@
     <table id="360" parent="3" name="gtid_executed"/>
     <table id="361" parent="3" name="help_category">
       <Comment>help categories</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="362" parent="3" name="help_keyword">
       <Comment>help keywords</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="363" parent="3" name="help_relation">
       <Comment>keyword-topic relation</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="364" parent="3" name="help_topic">
       <Comment>help topics</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="365" parent="3" name="innodb_index_stats">
       <Collation>utf8_bin</Collation>
@@ -1388,6 +1396,7 @@
     </table>
     <table id="368" parent="3" name="plugin">
       <Comment>MySQL plugins</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="369" parent="3" name="procs_priv">
       <Comment>Procedure privileges</Comment>
@@ -1401,22 +1410,29 @@
       <Comment>Role hierarchy and role grants</Comment>
       <Collation>utf8_bin</Collation>
     </table>
-    <table id="372" parent="3" name="server_cost"/>
+    <table id="372" parent="3" name="server_cost">
+      <Collation>utf8_general_ci</Collation>
+    </table>
     <table id="373" parent="3" name="servers">
       <Comment>MySQL Foreign Servers table</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="374" parent="3" name="slave_master_info">
       <Comment>Master Information</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="375" parent="3" name="slave_relay_log_info">
       <Comment>Relay Log Information</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="376" parent="3" name="slave_worker_info">
       <Comment>Worker Information</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="377" parent="3" name="slow_log">
       <Comment>Slow log</Comment>
       <Engine>CSV</Engine>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="378" parent="3" name="tables_priv">
       <Comment>Table privileges</Comment>
@@ -1424,18 +1440,23 @@
     </table>
     <table id="379" parent="3" name="time_zone">
       <Comment>Time zones</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="380" parent="3" name="time_zone_leap_second">
       <Comment>Leap seconds information for time zones</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="381" parent="3" name="time_zone_name">
       <Comment>Time zone names</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="382" parent="3" name="time_zone_transition">
       <Comment>Time zone transitions</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="383" parent="3" name="time_zone_transition_type">
       <Comment>Time zone transition types</Comment>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="384" parent="3" name="user">
       <Comment>Users and global privileges</Comment>

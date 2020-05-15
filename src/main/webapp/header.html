@@ -1,4 +1,5 @@
 <!-- 头部 start -->
+    <script src="js/getParameter.js"></script>
     <script type="text/javascript">
         $(function () {
             //发送ajax请求，获取用户的姓名
@@ -21,6 +22,15 @@
                 //4、把lis放入到指定的位置
                 $("#category").html(lis);
             });
+            //获取搜索框中的内容并完成页面的跳转
+            $("#search-button").click(function () {
+                //获取用户填入的搜索内容
+                var rname = $("#search_input").val();
+                var cid = getParameter("cid");
+                var currentPage = getParameter("currentPage");
+                //跳转到route_list.html中，并携带相关的参数
+                location.href = "route_list.html?cid="+cid+"&currentPage="+currentPage+"&rname="+rname;
+            })
         });
     </script>
     <header id="header">
@@ -46,8 +56,8 @@
                     <a href="/"><img src="images/logo.jpg" alt=""></a>
                 </div>
                 <div class="search">
-                    <input name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
-                    <a href="javascript:;" class="search-button">搜索</a>
+                    <input name="" type="text" placeholder="请输入路线名称" id="search_input" class="search_input" autocomplete="off">
+                    <a href="javascript:;" id="search-button" class="search-button">搜索</a>
                 </div>
                 <div class="hottel">
                     <div class="hot_pic">
