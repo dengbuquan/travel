@@ -17,11 +17,15 @@ public class RouteDaoImpl implements RouteDao {
         //因为要实现前台的搜索功能，所以前台发送过来的数据可能只包含rname，也可能只包含cid，所以要进行判断
         //根据情况进行sql和参数的匹配
         //使用baseSql和StringBuilder进行sql的拼接
-        String baseSql = "select count(*) from tab_route where cid=? ";
+        String baseSql = "select count(*) from tab_route where 1=1 ";
         StringBuilder sb = new StringBuilder(baseSql);
         List list = new ArrayList();
-        list.add(cid);
-        if(rname != null && rname.length() != 0){
+        //此处的0表示任意的意思，代表着前台没有发送过来cid参数，查询的时候也不需要加上cid的条件
+        if(cid != 0){
+            list.add(cid);
+            sb.append(" and cid = ? ");
+        }
+        if(rname != null && rname.length() != 0 && !"null".equalsIgnoreCase(rname)){
             //代表rname中有前台传过来的值，需要进行模糊查询
             sb.append(" and rname like ? ");
             list.add("%"+ rname +"%");
@@ -35,12 +39,16 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public List<Route> findByPage(int cid, int start, int pageSize, String rname) {
         //整个的改写思路同上。在进行参数拼接的时候要保证参数在集合中的插入顺序，所以不能使用set集合
-        String baseSql = "select * from tab_route where cid = ? ";
+        String baseSql = "select * from tab_route where 1=1 ";
         StringBuilder sb = new StringBuilder(baseSql);
         //使用List集合实现参数的拼接
         List list = new ArrayList();
-        list.add(cid);
-        if(rname != null && rname.length() != 0){
+        //此处的0表示任意的意思，代表着前台没有发送过来cid参数，查询的时候也不需要加上cid的条件
+        if(cid != 0){
+            list.add(cid);
+            sb.append(" and cid = ? ");
+        }
+        if(rname != null && rname.length() != 0 && !"null".equalsIgnoreCase(rname)){
             sb.append(" and rname like ? ");
             list.add("%"+ rname +"%");
         }

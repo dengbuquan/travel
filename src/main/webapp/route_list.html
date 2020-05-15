@@ -14,20 +14,30 @@
         }
     </style>
     <script src="js/jquery-3.3.1.js"></script>
+    <!--引入外部的getParameter.js文件，调用其中获取参数的方法-->
+    <script src="js/getParameter.js"></script>
     <script type="application/javascript">
         $(function () {
-            //从location中获取url
+            /*//从location中获取url
             var url = location.search;
             //从url中解析出cid
             var strs = url.split("=");
-            var cid = strs[1];
-            //弹窗测试得到的cid
-            // alert(cid);//测试成功
-            load(cid);
+            var cid = strs[1];*/
+            //利用getParameter.js中封装的函数获取url中的参数
+            //如果有对应名称的参数，则直接返回，否则返回null
+            var cid = getParameter("cid");
+            var currentPage = getParameter("currentPage");
+            var rname = getParameter("rname");
+            //注意：当页面传过来的数据为汉字时，需要解码
+            if(rname){
+                rname = window.decodeURIComponent(rname);
+            }
+            // alert(rname)
+            load(cid,currentPage,rname);
         })
 
-        function load(cid , currentPage) {
-            $.get("route/pageQuery",{cid:cid,currentPage:currentPage},function (data) {
+        function load(cid , currentPage , rname) {
+            $.get("route/pageQuery",{cid:cid,currentPage:currentPage,rname:rname},function (data) {
                 //处理后台相应回来data，格式就是一个pageBean对象
                 /*private int totalCount;//总条数
                 private int totalPage;//总页数
@@ -36,36 +46,50 @@
                 private List<T> list;//每页显示的数据集合*/
                 //第一步：根据后台返回来的数据，拼接分页条
                 var lis = '';
-                var first_page = '<li class="bg" onclick="javascript:load('+ cid +','+ 1 +')"><a href="javascript:void(0)">首页</a></li>';
-                var pre_page = '<li class="threeword bg" onclick="javascript:load('+ cid +','+ (data.currentPage-1) +')"><a href="javascript:void(0)">上一页</a></li>';
+                var first_page = '<li class="bg" onclick="javascript:load('+ cid +',1,\''+ rname+'\')"><a href="javascript:void(0)">首页</a></li>';
+                var pre_page;
+                if(data.currentPage == 1){
+                    pre_page = "";
+                }else{
+                    pre_page = '<li class="threeword bg" onclick="javascript:load('+ cid +','+(data.currentPage-1)+',\''+ rname+'\')"><a href="javascript:void(0)">上一页</a></li>';
+                }
                 lis = first_page + pre_page;
                 //将分页条中的页数选择固定为10个
                 //定义开始和结束的页数
-                var start = data.currentPage - 5;
-                var end = start + 9;
-
-                if(start < 1){
-                    start = 1;
-                    end = 10;
-                }else{
+                var start;
+                var end;
+                if(data.totalPage >= 10){
+                    start = data.currentPage - 5;
+                    end = start + 9;
+                    if(start < 1){
+                        start = 1;
+                        end = 10;
+                    }
                     if(end > data.totalPage){
                         end = data.totalPage;
                         start = end - 9;
                     }
+                }else{
+                    start = 1;
+                    end = totalPage;
                 }
-
                 for (var i = start; i <= end; i++) {
                     var page;
                     if(i == data.currentPage){
                         //表示当前页面
-                        page = '<li class="curPage bg" onclick="javascript:load('+ cid +','+ i +')"><a href="javascript:void(0)">'+i+'</a></li>';
+                        page = '<li class="curPage bg" onclick="javascript:load('+ cid +','+i+',\''+ rname+'\')"><a href="javascript:void(0)">'+i+'</a></li>';
                     }else{
-                        page = '<li class="bg" onclick="javascript:load('+ cid +','+ i +')"><a href="javascript:void(0)">'+i+'</a></li>';
+                        page = '<li class="bg" onclick="javascript:load('+ cid +','+i+',\''+ rname+'\')"><a href="javascript:void(0)">'+i+'</a></li>';
                     }
                     lis += page;
                 }
-                var next_page = '<li class="threeword bg" onclick="javascript:load('+ cid +','+ (data.currentPage+1) +')"><a href="javascript:void(0)">下一页</a></li>';
-                var last_page = '<li class="threeword bg" onclick="javascript:load('+ cid +','+ data.totalPage +')"><a href="javascript:void(0)">末页</a></li>';
+                var next_page;
+                if(data.currentPage == totalPage){
+                    next_page = "";
+                }else{
+                    next_page = '<li class="threeword bg" onclick="javascript:load('+ cid +','+(data.currentPage+1)+',\''+ rname+'\')"><a href="javascript:void(0)">下一页</a></li>';
+                }
+                var last_page = '<li class="threeword bg" onclick="javascript:load('+ cid +','+data.totalPage+',\''+ rname+'\')"><a href="javascript:void(0)">末页</a></li>';
                 lis = lis + next_page +last_page;
                 //第二步：将得到的分页条添加到ul标签中
                 $("#page_ul").html(lis);
