@@ -20,6 +20,10 @@ public class RouteServlet extends BaseServlet {
         String cidStr = request.getParameter("cid");
         String currentPageStr = request.getParameter("currentPage");
         String pageSizeStr = request.getParameter("pageSize");
+        String rname = request.getParameter("rname");
+        //因为rname是使用get请求发送过来的中文数据，在tomcat7的环境下需要进行转码
+        //意思就是把前端发送过来的数据以iso-8859-1转回二进制然后再以utf-8转成字符串
+        rname = new String(rname.getBytes("iso-8859-1"),"utf-8");
         //因为用户首次发送请求时，currentPageStr和pageSizeStr为空，
         //此时我们需要给它们一个默认值
         if(cidStr == null || cidStr.length() == 0){
@@ -41,7 +45,7 @@ public class RouteServlet extends BaseServlet {
 
         //第二步：调用业务层完成数据的获取
         RouteService routeService = new RouteServiceImpl();
-        PageBean<Route> pageBean = routeService.pageQuery(cid,currentPage,pageSize);
+        PageBean<Route> pageBean = routeService.pageQuery(cid,currentPage,pageSize,rname);
         //第三步：将业务层获取到的数据转化成json
         String json = CustomUtils.toJson(pageBean);
         //第四步：将json返回给前端
